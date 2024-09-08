@@ -146,10 +146,10 @@ const generateAPIResponseComImagem = async (elemento_html_pai) => {
   const file = fileInput.files[0];
   console.log(fileInput)
   
-  if (!file) {
-    alert('Please select a file');
-    return;
-  }
+  // if (!file) {
+  //   alert('Please select a file');
+  //   return;
+  // }
   console.log(file)
   const formData = new FormData();
   formData.append('image', file);
