@@ -163,12 +163,12 @@ const generateAPIResponseComImagem = async (elemento_html_pai) => {
       document.getElementById('description').textContent = data.description;
       console.log(document.getElementById('description').innerText)
       
-      textElement.innerText=data.description
+      textElement.innerText=data.description.replace(/\*\*(.*?)\*\*/g, '$1')
       textElement.style.color='white'
       // let respostaEmTexto=document.getElementById('description').innerText
-
-      // showTypingEffect(data.description,textElement,elemento_html_pai)
-      chatContainer.querySelector('.text').innerText=data.description
+      console.log(data.description)
+      showTypingEffect(data.description.replace(/\*\*(.*?)\*\*/g, '$1'),textElement,elemento_html_pai)
+      // chatContainer.querySelector('.text').innerText=data.description.replace(/\*\*(.*?)\*\*/g, '$1')
      
     } else {
       document.getElementById('description').textContent = 'Error: No description received';
