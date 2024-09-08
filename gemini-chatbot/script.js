@@ -5,12 +5,13 @@ const suggestions = document.querySelectorAll(".suggestion");
 const toggleThemeButton = document.querySelector("#theme-toggle-button");
 const deleteChatButton = document.querySelector("#delete-chat-button");
 
+
 // State variables
 let userMessage = null;
 let isResponseGenerating = false;
 
 // API configuration
-const API_KEY = "YOUR-KEY"; // Your API key here
+const API_KEY = "AIzaSyDl8IHhDXss3cbGt5-DRZINXxefcbM7zRk"; // Your API key here
 const API_URL = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
 
 // Load theme and chat data from local storage on page load
@@ -37,34 +38,51 @@ const createMessageElement = (content, ...classes) => {
   return div;
 }
 
-document.getElementById('uploadButton').addEventListener('click', () => {
-  const fileInput = document.getElementById('fileInput');
-  const file = fileInput.files[0];
+document.getElementById('formulario').addEventListener('submit', (evento) => {
+  evento.preventDefault()
+
+});
+
+document.getElementById('uploadButton').addEventListener('click', (evento) => {
+  evento.preventDefault()
+
+  // const fileInput = document.getElementById('fileInput');
+  // const textElement = incomingMessageDiv.querySelector(".text")
+  // const file = fileInput.files[0];
   
-  if (!file) {
-    alert('Please select a file');
-    return;
-  }
+  // if (!file) {
+  //   alert('Please select a file');
+  //   return;
+  // }
+  // console.log(file)
+  // const formData = new FormData();
+  // formData.append('image', file);
 
-  const formData = new FormData();
-  formData.append('image', file);
+  // fetch('http://localhost:3000/upload', {
+  //   method: 'POST',
+  //   body: formData,
+  // })
+  // .then(response => response.json())
+  // .then(data => {
+  //   if (data && data.description) {
+  //     document.getElementById('description').textContent = data.description;
+  //     console.log(document.getElementById('description').innerText)
 
-  fetch('http://localhost:3000/upload', {
-    method: 'POST',
-    body: formData,
-  })
-  .then(response => response.json())
-  .then(data => {
-    if (data && data.description) {
-      document.getElementById('description').textContent = data.description;
-    } else {
-      document.getElementById('description').textContent = 'Error: No description received';
-    }
-  })
-  .catch(error => {
-    document.getElementById('description').textContent = 'Error: ' + error.message;
-    console.error('Error:', error);
-  });
+  //     let respostaEmTexto=document.getElementById('description').innerText
+  //     let respostaFragmentada=respostaEmTexto.replace(/\*\*(.*?)\*\*/g, '$1')
+  //     showLoadingAnimationParaImagens(respostaEmTexto)
+      
+     
+  //   } else {
+  //     document.getElementById('description').textContent = 'Error: No description received';
+  //   }
+  // })
+  // .catch(error => {
+  //   document.getElementById('description').innerText = 'Error: ' + error.message;
+  //   console.error('Error:', error);
+  // });
+ showLoadingAnimationParaImagens()
+  
 });
 
 // Show typing effect by displaying words one by one
@@ -120,6 +138,52 @@ const generateAPIResponse = async (incomingMessageDiv) => {
   }
 }
 
+const generateAPIResponseComImagem = async (elemento_html_pai) => {
+  const textElement = elemento_html_pai.querySelector(".text"); // Getting text element
+  
+  const fileInput = document.getElementById('fileInput');
+  // const textElement = incomingMessageDiv.querySelector(".text")
+  const file = fileInput.files[0];
+  
+  if (!file) {
+    alert('Please select a file');
+    return;
+  }
+  console.log(file)
+  const formData = new FormData();
+  formData.append('image', file);
+
+  fetch('http://localhost:3000/upload', {
+    method: 'POST',
+    body: formData,
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data && data.description) {
+      document.getElementById('description').textContent = data.description;
+      console.log(document.getElementById('description').innerText)
+      
+      textElement.innerText=data.description
+      // let respostaEmTexto=document.getElementById('description').innerText
+
+      showTypingEffect(respostaEmTexto,textElement,elemento_html_pai)
+      
+     
+    } else {
+      document.getElementById('description').textContent = 'Error: No description received';
+    }
+  })
+  .catch(error => {
+    document.getElementById('description').innerText = 'Error: ' + error.message;
+    console.error('Error:', error);
+  });
+
+  // Show typing effect
+
+}
+
+
+
 // Show a loading animation while waiting for the API response
 const showLoadingAnimation = () => {
   const html = `<div class="message-content">
@@ -138,6 +202,25 @@ const showLoadingAnimation = () => {
 
   chatContainer.scrollTo(0, chatContainer.scrollHeight); // Scroll to the bottom
   generateAPIResponse(incomingMessageDiv);
+}
+
+const showLoadingAnimationParaImagens = () => {
+  const html = `<div class="message-content">
+                  <img class="avatar" src="images/gemini.svg" alt="Gemini avatar">
+                  <p class="text"></p>
+                  <div class="loading-indicator">
+                    <div class="loading-bar"></div>
+                    <div class="loading-bar"></div>
+                    <div class="loading-bar"></div>
+                  </div>
+                </div>
+                <span onClick="copyMessage(this)" class="icon material-symbols-rounded">content_copy</span>`;
+
+  const incomingMessageDiv = createMessageElement(html, "incoming", "loading");
+  chatContainer.appendChild(incomingMessageDiv);
+
+  chatContainer.scrollTo(0, chatContainer.scrollHeight); // Scroll to the bottom
+  generateAPIResponseComImagem(incomingMessageDiv);
 }
 
 // Copy message text to the clipboard

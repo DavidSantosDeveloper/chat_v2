@@ -41,7 +41,7 @@
 
   <!-- Typing Area -->
   <div class="typing-area">
-    <form action="#" class="typing-form">
+    <form action="#" class="typing-form" id="formulario" onsubmit="return false;">
       <div class="input-wrapper">
         <input type="text" placeholder="Enter a prompt here" class="typing-input" required />
         <button id="send-message-button" class="icon material-symbols-rounded">send</button>
@@ -50,7 +50,7 @@
         <span id="theme-toggle-button" class="icon material-symbols-rounded">light_mode</span>
         <span id="delete-chat-button" class="icon material-symbols-rounded">delete</span>
         <input type="file" id="fileInput">
-        <button id="uploadButton">Upload</button>
+        <button id="uploadButton" type="submit">Upload</button>
         <p id="description"></p>
       </div>
     </form>
@@ -60,7 +60,7 @@
   </div>
 
 
-  <script type="module" src="script.js"></script>
+  <script type="module" src="script.js" defer></script>
 </body>
 
 </html>
