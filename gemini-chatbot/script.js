@@ -144,7 +144,7 @@ const generateAPIResponseComImagem = async (elemento_html_pai) => {
   const fileInput = document.getElementById('fileInput');
   // const textElement = incomingMessageDiv.querySelector(".text")
   const file = fileInput.files[0];
-  console.log(file)
+  console.log(fileInput)
   
   if (!file) {
     alert('Please select a file');
