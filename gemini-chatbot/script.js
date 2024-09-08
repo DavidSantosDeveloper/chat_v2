@@ -81,7 +81,7 @@ document.getElementById('uploadButton').addEventListener('click', (evento) => {
   //   document.getElementById('description').innerText = 'Error: ' + error.message;
   //   console.error('Error:', error);
   // });
- showLoadingAnimationParaImagens()
+  handleOutgoingChatParaImagem()
   
 });
 
@@ -256,6 +256,26 @@ const handleOutgoingChat = () => {
   setTimeout(showLoadingAnimation, 500); // Show loading animation after a delay
 }
 
+const handleOutgoingChatParaImagem = () => {
+  userMessage = typingForm.querySelector(".typing-input").value.trim() || userMessage;
+  if(!userMessage || isResponseGenerating) return; // Exit if there is no message or response is generating
+
+  isResponseGenerating = true;
+
+  const html = `<div class="message-content">
+                  <img class="avatar" src="images/user.jpg" alt="User avatar">
+                  <p class="text"></p>
+                </div>`;
+
+  const outgoingMessageDiv = createMessageElement(html, "outgoing");
+  outgoingMessageDiv.querySelector(".text").innerText = userMessage;
+  chatContainer.appendChild(outgoingMessageDiv);
+  
+  typingForm.reset(); // Clear input field
+  document.body.classList.add("hide-header");
+  chatContainer.scrollTo(0, chatContainer.scrollHeight); // Scroll to the bottom
+  setTimeout(showLoadingAnimationParaImagens, 500); // Show loading animation after a delay
+}
 // Toggle between light and dark themes
 toggleThemeButton.addEventListener("click", () => {
   const isLightMode = document.body.classList.toggle("light_mode");
