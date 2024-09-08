@@ -164,9 +164,10 @@ const generateAPIResponseComImagem = async (elemento_html_pai) => {
       console.log(document.getElementById('description').innerText)
       
       textElement.innerText=data.description.replace(/\*\*(.*?)\*\*/g, '$1')
+      console.log(textElement.innerText)
       textElement.style.color='white'
       // let respostaEmTexto=document.getElementById('description').innerText
-      console.log(data.description)
+      // console.log(data.description)
       showTypingEffect(data.description.replace(/\*\*(.*?)\*\*/g, '$1'),textElement,elemento_html_pai)
       // chatContainer.querySelector('.text').innerText=data.description.replace(/\*\*(.*?)\*\*/g, '$1')
      
