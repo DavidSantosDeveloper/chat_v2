@@ -167,8 +167,8 @@ const generateAPIResponseComImagem = async (elemento_html_pai) => {
       textElement.style.color='white'
       // let respostaEmTexto=document.getElementById('description').innerText
 
-      showTypingEffect(data.description,textElement,elemento_html_pai)
-      
+      // showTypingEffect(data.description,textElement,elemento_html_pai)
+      chatContainer.querySelector('.text').innerText=data.description
      
     } else {
       document.getElementById('description').textContent = 'Error: No description received';
