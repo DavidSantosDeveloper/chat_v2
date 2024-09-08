@@ -166,7 +166,7 @@ const generateAPIResponseComImagem = async (elemento_html_pai) => {
       textElement.innerText=data.description
       // let respostaEmTexto=document.getElementById('description').innerText
 
-      showTypingEffect(respostaEmTexto,textElement,elemento_html_pai)
+      showTypingEffect(data.description,textElement,elemento_html_pai)
       
      
     } else {
